@@ -1,0 +1,30 @@
+package components
+
+import "github.com/nathanaelcunningham/billReminder/models"
+import "fmt"
+
+templ Layout(bills []models.Bill) {
+	<html>
+		<head>
+			<title>Bill Minder</title>
+			<meta charset="UTF-8"/>
+			<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+			<script src="https://cdn.tailwindcss.com"></script>
+		</head>
+		<body>
+			<div>
+				@billsList(bills)
+			</div>
+		</body>
+	</html>
+}
+
+templ billsList(bills []models.Bill) {
+	for _, bill := range bills {
+		<div class="">
+			<div>{ bill.Name }</div>
+			<div>{ fmt.Sprint(bill.Amount) }</div>
+			<div>{ fmt.Sprint(bill.DueDateDay) }</div>
+		</div>
+	}
+}
