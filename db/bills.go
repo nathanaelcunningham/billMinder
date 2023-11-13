@@ -13,6 +13,29 @@ func NewBillRepository(db *DB) *BillRepository {
 	return &BillRepository{db}
 }
 
+func (r *BillRepository) Get(id int64) (*models.Bill, error) {
+	t, err := tqla.New(tqla.WithPlaceHolder(tqla.Dollar))
+	if err != nil {
+		return nil, err
+	}
+
+	stmt, args, err := t.Compile(
+		`SELECT id,name, due_date_day, amount FROM bills WHERE id = {{ . }}`,
+		id,
+	)
+	if err != nil {
+		return nil, err
+	}
+
+	row := r.DB.QueryRow(stmt, args...)
+	var b models.Bill
+	err = row.Scan(&b.ID, &b.Name, &b.DueDateDay, &b.Amount)
+	if err != nil {
+		return nil, err
+	}
+	return &b, nil
+}
+
 func (r *BillRepository) GetAll() ([]models.Bill, error) {
 	t, err := tqla.New(tqla.WithPlaceHolder(tqla.Dollar))
 	if err != nil {
@@ -61,6 +84,27 @@ func (r *BillRepository) Create(bill *models.Bill) (int64, error) {
 	}
 
 	return res.LastInsertId()
+}
+
+func (r *BillRepository) Update(bill *models.Bill) error {
+	t, err := tqla.New(tqla.WithPlaceHolder(tqla.Dollar))
+	if err != nil {
+		return err
+	}
+
+	stmt, args, err := t.Compile(
+		`UPDATE bills SET name = {{ $.Name }}, due_date_day = {{ $.DueDateDay }}, amount = {{ $.Amount }} WHERE id = {{ $.ID }}`,
+		bill,
+	)
+	if err != nil {
+		return err
+	}
+	_, err = r.DB.Exec(stmt, args...)
+	if err != nil {
+		return err
+	}
+
+	return nil
 }
 
 func (r *BillRepository) Delete(id int64) error {

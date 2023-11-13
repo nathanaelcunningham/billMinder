@@ -1,0 +1,88 @@
+package components
+
+import "github.com/nathanaelcunningham/billReminder/models"
+import "fmt"
+
+templ BillTable(bills []models.Bill) {
+	<div class="w-full overflow-x-auto">
+		<table class="mx-auto max-w-4xl w-full whitespace-nowrap rounded-lg bg-white divide-y divide-gray-300 overflow-hidden">
+			<thead class="bg-gray-50">
+				<tr class="text-left text-gray-600">
+					<th class="font-semibold text-sm uppercase px-2 py-4">
+						Name
+					</th>
+					<th class="font-semibold text-sm uppercase px-2 py-4">
+						Amount
+					</th>
+					<th class="font-semibold text-sm uppercase px-2 py-4">
+						Due Date
+					</th>
+					<th class="font-semibold text-sm uppercase px-2 py-4">
+						Action
+					</th>
+				</tr>
+			</thead>
+			<tbody class="divide-y divide-gray-200" id="bill-table" hx-target="closest tr" hx-swap="outerHTML">
+				for _, bill := range bills {
+					@GetBillRow(bill)
+				}
+			</tbody>
+		</table>
+	</div>
+}
+
+templ GetBillRow(bill models.Bill) {
+	<tr>
+		<td class="px-2 py-4">
+			{ bill.Name }
+		</td>
+		<td class="px-2 py-4">
+			{ fmt.Sprint(bill.Amount) }
+		</td>
+		<td class="px-2 py-4">
+			{ fmt.Sprint(bill.DueDateDay) }
+		</td>
+		<td class="px-2 py-4">
+			<button
+ 				class="btn btn-danger"
+ 				hx-get={ fmt.Sprintf("/bills/%d/edit",bill.ID) }
+ 				hx-trigger="edit"
+ 				_="on click
+                     if .editing is not empty
+                       Swal.fire({title: &#39;Already Editing&#39;,
+                                  showCancelButton: true,
+                                  confirmButtonText: &#39;Yep, Edit This Row!&#39;,
+                                  text:&#39;Hey!  You are already editing a row!  Do you want to cancel that edit and continue?&#39;})
+                       if the result&#39;s isConfirmed is false
+                         halt
+                       end
+                       send cancel to .editing
+                     end
+                     trigger edit"
+			>
+				Edit
+			</button>
+		</td>
+	</tr>
+}
+
+templ EditBillRow(bill models.Bill) {
+	<tr hx-trigger="cancel" class="editing lg:table-row block" hx-get={ fmt.Sprintf("/bills/%d",bill.ID) }>
+		<td class="px-2 py-4 lg:table-cell block">
+			<input type="text" name="name" id="name" value={ bill.Name } autocomplete="given-name" placeholder="Name" class="mt-1 focus:ring-indigo-500  w-full lg:w-auto shadow-sm text-xs lg:text-sm border-gray-300 rounded-md"/>
+		</td>
+		<td class="px-2 py-4 lg:table-cell block">
+			<input type="number" name="amount" id="amount" value={ fmt.Sprint(bill.Amount) } placeholder="Amount" autocomplete="amount" class="mt-1 focus:ring-indigo-500 w-full lg:w-auto shadow-sm text-xs lg:text-sm border-gray-300 rounded-md"/>
+		</td>
+		<td class="px-2 py-4 lg:table-cell block">
+			<select id="day" name="dueDateDay" autocomplete="dueDateDay" class="mt-1 block w-full lg:w-auto py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+				<option value="1">1</option>
+				<option value="31">31</option>
+			</select>
+		</td>
+		<td class="px-2 py-4 lg:table-cell block">
+			<button type="button" hx-get={ fmt.Sprintf("/bills/%d",bill.ID) } class="px-4 py-2 mt-2 font-semibold text-white bg-red-500 rounded hover:bg-red-700">Cancel</button>
+			<button type="submit" hx-include="closest tr" hx-put={ fmt.Sprintf("/bills/%d",bill.ID) } class="px-4 py-2 font-semibold text-white bg-green-500 rounded hover:bg-green-700">Save</button>
+		</td>
+	</tr>
+}
