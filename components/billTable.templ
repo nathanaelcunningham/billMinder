@@ -44,7 +44,6 @@ templ GetBillRow(bill models.Bill) {
 		</td>
 		<td class="px-2 py-4">
 			<button
- 				class="btn btn-danger"
  				hx-get={ fmt.Sprintf("/bills/%d/edit",bill.ID) }
  				hx-trigger="edit"
  				_="on click
