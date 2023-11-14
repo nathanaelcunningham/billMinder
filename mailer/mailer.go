@@ -2,6 +2,7 @@ package mailer
 
 import (
 	"fmt"
+	"log/slog"
 
 	"github.com/sendgrid/sendgrid-go"
 	"github.com/sendgrid/sendgrid-go/helpers/mail"
@@ -30,5 +31,6 @@ func (m Mailer) SendMail(content string) error {
 	if response.StatusCode >= 400 {
 		return fmt.Errorf("error sending email: %v", response.Body)
 	}
+	slog.Info("Email sent successfully")
 	return nil
 }
