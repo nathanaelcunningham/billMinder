@@ -13,9 +13,8 @@ type DB struct {
 	*sql.DB
 }
 
-func New(dbName string) *DB {
-	rootDir, _ := os.Getwd()
-	db, err := sql.Open("sqlite3", filepath.Join(rootDir, dbName))
+func New(path string) *DB {
+	db, err := sql.Open("sqlite3", path)
 	if err != nil {
 		log.Fatal(err)
 	}

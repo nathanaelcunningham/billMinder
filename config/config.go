@@ -9,6 +9,7 @@ import (
 
 type Config struct {
 	SendgridApiKey string `mapstructure:"SENDGRID_API_KEY"`
+	DBPath         string `mapstructure:"DB_PATH"`
 }
 
 func NewConfig(path string) *Config {
@@ -28,6 +29,7 @@ func NewConfig(path string) *Config {
 func loadConfig(path string) (config Config, err error) {
 	cfg := Config{
 		SendgridApiKey: os.Getenv("SENDGRID_API_KEY"),
+		DBPath:         os.Getenv("DB_PATH"),
 	}
 	return cfg, nil
 }

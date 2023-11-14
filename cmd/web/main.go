@@ -27,7 +27,7 @@ func main() {
 
 func run() error {
 	cfg := config.NewConfig(".env")
-	database := db.New("billReminder.db")
+	database := db.New(cfg.DBPath)
 	database.RunMigrations()
 	defer database.Close()
 
