@@ -2,7 +2,6 @@ package main
 
 import (
 	"bytes"
-	"fmt"
 	"strconv"
 
 	"github.com/labstack/echo/v4"
@@ -79,7 +78,6 @@ func (a *application) updateBillRow(c echo.Context) error {
 	billCreate.Amount = amt
 	day, _ := strconv.ParseInt(c.FormValue("dueDateDay"), 10, 64)
 	billCreate.DueDateDay = day
-	fmt.Println(billCreate)
 
 	err := a.billRepo.Update(&billCreate)
 	if err != nil {

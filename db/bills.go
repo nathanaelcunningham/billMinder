@@ -1,6 +1,8 @@
 package db
 
 import (
+	"time"
+
 	"github.com/VauntDev/tqla"
 	"github.com/nathanaelcunningham/billReminder/models"
 )
@@ -48,6 +50,43 @@ func (r *BillRepository) GetAll() ([]models.Bill, error) {
 	}
 
 	rows, err := r.DB.Query(stmt)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+
+	bills := []models.Bill{}
+	for rows.Next() {
+		var b models.Bill
+		err := rows.Scan(&b.ID, &b.Name, &b.DueDateDay, &b.Amount)
+		if err != nil {
+			return nil, err
+		}
+		bills = append(bills, b)
+	}
+	return bills, nil
+}
+func (r *BillRepository) GetUpcoming() ([]models.Bill, error) {
+	t, err := tqla.New(tqla.WithPlaceHolder(tqla.Dollar))
+	if err != nil {
+		return nil, err
+	}
+
+	today := time.Now().Day()
+	type dayFilter struct {
+		StartDay int
+		EndDay   int
+	}
+
+	stmt, args, err := t.Compile(
+		`SELECT id,name, due_date_day, amount FROM bills WHERE due_date_day BETWEEN {{ .StartDay }} AND {{ .EndDay }}`,
+		dayFilter{today, today + 7},
+	)
+	if err != nil {
+		return nil, err
+	}
+
+	rows, err := r.DB.Query(stmt, args...)
 	if err != nil {
 		return nil, err
 	}

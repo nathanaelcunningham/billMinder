@@ -1,24 +1,19 @@
 package main
 
 import (
-	"bytes"
+	"fmt"
+	"log/slog"
 
 	"github.com/labstack/echo/v4"
-	"github.com/nathanaelcunningham/billReminder/components"
 )
 
 func (a *application) testEmail(c echo.Context) error {
-	bills, err := a.billRepo.GetAll()
+	bills, err := a.billRepo.GetUpcoming()
 	if err != nil {
+		slog.Error(err.Error())
 		return err
 	}
 
-	content := components.BillReminderEmail(bills)
-	buf := bytes.NewBuffer(nil)
-	content.Render(c.Request().Context(), buf)
-	err = a.mailClient.SendMail(buf.String())
-	if err != nil {
-		return err
-	}
+	fmt.Println(bills)
 	return nil
 }
