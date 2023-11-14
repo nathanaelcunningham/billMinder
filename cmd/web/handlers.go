@@ -2,6 +2,7 @@ package main
 
 import (
 	"bytes"
+	"fmt"
 	"strconv"
 
 	"github.com/labstack/echo/v4"
@@ -20,6 +21,7 @@ func (a *application) home(c echo.Context) error {
 func (a *application) billsTable(c echo.Context) error {
 	bills, err := a.billRepo.GetAll()
 	if err != nil {
+		fmt.Printf("%s\n", err.Error())
 		return err
 	}
 	comp := components.BillTable(bills)
