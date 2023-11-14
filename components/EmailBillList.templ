@@ -1,0 +1,60 @@
+package components
+
+import "github.com/nathanaelcunningham/billReminder/models"
+import "fmt"
+
+templ BillReminderEmail(bills []models.Bill) {
+	<!DOCTYPE html>
+	<html>
+		<head>
+			<meta name="viewport" content="width=device-width, initial-scale=1"/>
+			<style type="text/css">
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #F7F7F7;
+    }
+    .container {
+      width: 80%;
+      padding-right: 15px;
+      padding-left: 15px;
+      margin-right: auto;
+      margin-left: auto;
+    }
+    .bill-card {
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      margin: 10px 0px;
+      padding: 15px;
+      background-color: #fff;
+      box-shadow: 0 0 10px 0 #ddd;
+    }
+    .bill-card dt {
+      float: left;
+      clear: left;
+      font-weight: bold;
+    }
+    .bill-card dd {
+      margin-left: 110px;
+    }
+  </style>
+		</head>
+		<body>
+			<div class="container">
+				<h2>Your Upcoming Bills</h2>
+				<!-- Begin Bill Card -->
+				for _, bill := range bills {
+					<dl class="bill-card">
+						<dt>Name:</dt>
+						<dd>{ bill.Name }</dd>
+						<dt>Amount:</dt>
+						<dd>{ fmt.Sprint(bill.Amount) }</dd>
+						<dt>Due Date:</dt>
+						<dd>{ fmt.Sprint(bill.DueDateDay) }</dd>
+					</dl>
+				}
+			</div>
+		</body>
+	</html>
+}

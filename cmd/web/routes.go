@@ -12,5 +12,6 @@ func (a *application) routes() *echo.Echo {
 	e.GET("/bills/:id", a.getBillRow)
 	e.PUT("/bills/:id", a.updateBillRow)
 	e.GET("/bills/:id/edit", a.editBillRow)
+	e.GET("/testEmail", a.testEmail)
 	return e
 }
