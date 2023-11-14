@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"log"
 	"sync"
 	"time"
@@ -27,6 +28,7 @@ func main() {
 
 func run() error {
 	cfg := config.NewConfig(".env")
+	fmt.Println(cfg.DBPath)
 	database := db.New(cfg.DBPath)
 	database.RunMigrations()
 	defer database.Close()
