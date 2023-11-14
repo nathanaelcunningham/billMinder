@@ -3,7 +3,9 @@ package main
 import (
 	"log"
 	"sync"
+	"time"
 
+	"github.com/go-co-op/gocron"
 	"github.com/nathanaelcunningham/billReminder/config"
 	"github.com/nathanaelcunningham/billReminder/db"
 	"github.com/nathanaelcunningham/billReminder/mailer"
@@ -40,6 +42,10 @@ func run() error {
 		mailClient: mailClient,
 		cfg:        cfg,
 	}
+
+	s := gocron.NewScheduler(time.UTC)
+	s.Every(1).Day().At("00:01").Do(app.RunEmailCron)
+	s.StartAsync()
 
 	return app.serveHTTP()
 }
