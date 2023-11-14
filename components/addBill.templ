@@ -14,5 +14,25 @@ templ AddBill(bill models.Bill) {
 		<td class="px-2 py-4">
 			{ fmt.Sprint(bill.DueDateDay) }
 		</td>
+		<td class="px-2 py-4">
+			<button
+ 				hx-get={ fmt.Sprintf("/bills/%d/edit",bill.ID) }
+ 				hx-trigger="edit"
+ 				_="on click
+                     if .editing is not empty
+                       Swal.fire({title: &#39;Already Editing&#39;,
+                                  showCancelButton: true,
+                                  confirmButtonText: &#39;Yep, Edit This Row!&#39;,
+                                  text:&#39;Hey!  You are already editing a row!  Do you want to cancel that edit and continue?&#39;})
+                       if the result&#39;s isConfirmed is false
+                         halt
+                       end
+                       send cancel to .editing
+                     end
+                     trigger edit"
+			>
+				Edit
+			</button>
+		</td>
 	</tr>
 }

@@ -180,7 +180,7 @@ func EditBillRow(bill models.Bill) templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("\" autocomplete=\"given-name\" placeholder=\"Name\" class=\"mt-1 focus:ring-indigo-500  w-full lg:w-auto shadow-sm text-xs lg:text-sm border-gray-300 rounded-md\"></td><td class=\"px-2 py-4 lg:table-cell block\"><input type=\"number\" name=\"amount\" id=\"amount\" value=\"")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("\" autocomplete=\"given-name\" placeholder=\"Name\" class=\"mt-1 focus:ring-indigo-500  w-full lg:w-auto shadow-sm text-sm lg:text-sm border-gray-300 rounded-md p-1\"></td><td class=\"px-2 py-4 lg:table-cell block\"><input type=\"number\" name=\"amount\" id=\"amount\" value=\"")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -188,7 +188,7 @@ func EditBillRow(bill models.Bill) templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("\" placeholder=\"Amount\" autocomplete=\"amount\" class=\"mt-1 focus:ring-indigo-500 w-full lg:w-auto shadow-sm text-xs lg:text-sm border-gray-300 rounded-md\"></td><td class=\"px-2 py-4 lg:table-cell block\"><select id=\"day\" name=\"dueDateDay\" autocomplete=\"dueDateDay\" class=\"mt-1 block w-full lg:w-auto py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm\">")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("\" placeholder=\"Amount\" autocomplete=\"amount\" class=\"mt-1 focus:ring-indigo-500 w-full lg:w-auto shadow-sm text-sm lg:text-sm border-gray-300 rounded-md p-1\"></td><td class=\"px-2 py-4 lg:table-cell block\"><select id=\"day\" name=\"dueDateDay\" autocomplete=\"dueDateDay\" class=\"mt-1 block w-full lg:w-auto py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm\">")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

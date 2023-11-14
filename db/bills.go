@@ -44,7 +44,10 @@ func (r *BillRepository) GetAll() ([]models.Bill, error) {
 		return nil, err
 	}
 
-	stmt, _, err := t.Compile(`SELECT id,name, due_date_day, amount FROM bills`, nil)
+	stmt, _, err := t.Compile(
+		`SELECT id,name, due_date_day, amount FROM bills ORDER BY due_date_day ASC, name ASC`,
+		nil,
+	)
 	if err != nil {
 		return nil, err
 	}
@@ -79,7 +82,7 @@ func (r *BillRepository) GetUpcoming() ([]models.Bill, error) {
 	}
 
 	stmt, args, err := t.Compile(
-		`SELECT id,name, due_date_day, amount FROM bills WHERE due_date_day BETWEEN {{ .StartDay }} AND {{ .EndDay }}`,
+		`SELECT id,name, due_date_day, amount FROM bills WHERE due_date_day BETWEEN {{ .StartDay }} AND {{ .EndDay }} ORDER BY due_date_day ASC, name ASC`,
 		dayFilter{today, today + 7},
 	)
 	if err != nil {
