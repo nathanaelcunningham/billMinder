@@ -3,16 +3,15 @@ package main
 import (
 	"bytes"
 	"context"
-
-	"log/slog"
+	"fmt"
 
 	"github.com/nathanaelcunningham/billReminder/components"
 )
 
 func (a *application) RunEmailCron() {
-	bills, err := a.billRepo.GetAll()
+	bills, err := a.billRepo.GetUpcoming()
 	if err != nil {
-		slog.Error(err.Error())
+		fmt.Printf("%s\n", err.Error())
 	}
 
 	content := components.BillReminderEmail(bills)
@@ -20,6 +19,6 @@ func (a *application) RunEmailCron() {
 	content.Render(context.Background(), buf)
 	err = a.mailClient.SendMail(buf.String())
 	if err != nil {
-		slog.Error(err.Error())
+		fmt.Printf("%s\n", err.Error())
 	}
 }
