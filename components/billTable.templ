@@ -3,7 +3,7 @@ package components
 import "github.com/nathanaelcunningham/billReminder/models"
 import "fmt"
 
-templ BillTable(bills []models.Bill) {
+templ BillTable(bills []models.Bill, total float64) {
 	<div class="w-full overflow-x-auto">
 		<table class="mx-auto max-w-4xl w-full whitespace-nowrap rounded-lg bg-white divide-y divide-gray-300 overflow-hidden">
 			<thead class="bg-gray-50">
@@ -27,6 +27,11 @@ templ BillTable(bills []models.Bill) {
 					@GetBillRow(bill)
 				}
 			</tbody>
+			<tfoot>
+				<tr>
+					<td>Total Monthly Cost: { fmt.Sprint(total) }</td>
+				</tr>
+			</tfoot>
 		</table>
 	</div>
 }

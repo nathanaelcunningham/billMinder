@@ -24,7 +24,11 @@ func (a *application) billsTable(c echo.Context) error {
 		fmt.Printf("%s\n", err.Error())
 		return err
 	}
-	comp := components.BillTable(bills)
+	total := 0.0
+	for _, bill := range bills {
+		total += bill.Amount
+	}
+	comp := components.BillTable(bills, total)
 	buf := bytes.NewBuffer(nil)
 	comp.Render(c.Request().Context(), buf)
 
