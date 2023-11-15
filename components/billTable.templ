@@ -30,7 +30,7 @@ templ BillTable(bills []models.Bill, total float64) {
 			</tbody>
 			<tfoot>
 				<tr>
-					<td>Total Monthly Cost: { fmt.Sprint(total) }</td>
+					<td>Total Monthly Cost: </td>
 					<td>{ fmt.Sprint(math.Round(total*100)/100) }</td>
 				</tr>
 			</tfoot>
