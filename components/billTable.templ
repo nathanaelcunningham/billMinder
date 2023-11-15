@@ -2,6 +2,7 @@ package components
 
 import "github.com/nathanaelcunningham/billReminder/models"
 import "fmt"
+import "math"
 
 templ BillTable(bills []models.Bill, total float64) {
 	<div class="w-full overflow-x-auto">
@@ -30,6 +31,7 @@ templ BillTable(bills []models.Bill, total float64) {
 			<tfoot>
 				<tr>
 					<td>Total Monthly Cost: { fmt.Sprint(total) }</td>
+					<td>{ fmt.Sprint(math.Round(total*100)/100) }</td>
 				</tr>
 			</tfoot>
 		</table>
