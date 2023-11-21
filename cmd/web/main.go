@@ -31,8 +31,8 @@ func main() {
 
 func run() error {
 	cfg := config.NewConfig(".env")
-	database := db.New(cfg.DBPath)
-	database.RunMigrations()
+	database := db.New(cfg.DBPath, true)
+	// database.RunMigrations()
 	defer database.Close()
 
 	billRepo := db.NewBillRepository(database)
