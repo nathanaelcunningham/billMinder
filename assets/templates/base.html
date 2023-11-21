@@ -10,12 +10,13 @@
 		<script src="/static/js/htmx.min.js"></script>
 		<script src="https://unpkg.com/hyperscript.org@0.9.12"></script>
 		<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+		<link rel="manifest" href="/static/manifest.json" />
 	</head>
 	<body class="p-6" hx-boost="true">
 		<div class="flex justify-between pb-6">
 			<h1 class="text-3xl font-semibold">Bills List</h1>
 			<button
-				class="py-2 px-4 text-white bg-sky-600 rounded"
+				class="py-2 px-4 text-white rounded bg-sky-600"
 				hx-get="/bills/new"
 				hx-swap="beforebegin"
 				hx-target="#bill-list"

@@ -1,0 +1,34 @@
+{
+    "background_color": "#ffffff",
+    "description": "A tool to remind you of upcoming bills",
+    "dir": "ltr",
+    "display": "standalone",
+    "name": "billminder.thinkbrain",
+    "orientation": "any",
+    "scope": "/",
+    "short_name": "billminder.thinkbrain",
+    "start_url": "/static",
+    "theme_color": "#ffffff",
+    "categories": [
+        "finance"
+    ],
+    "screenshots": [],
+    "icons": [
+        {
+            "src": "#",
+            "type": "image/jpg"
+        },
+        {
+            "src": "/favicon.ico",
+            "type": "image/x-icon"
+        }
+    ],
+    "shortcuts": [
+        {
+            "name": "Home",
+            "url": "/",
+            "description": "Home page"
+        }
+    ],
+    "id": "billMinder"
+}
