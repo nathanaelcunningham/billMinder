@@ -1,0 +1,32 @@
+{
+	"plugins": [
+		"/Users/nathanael/.nvm/versions/node/v18.15.0/lib/node_modules/prettier-plugin-go-template/lib/index.js",
+		"/Users/nathanael/.nvm/versions/node/v18.15.0/lib/node_modules/prettier-plugin-organize-attributes/lib/index.js"
+	],
+	"overrides": [
+		{
+			"files": ["*.html"],
+			"options": {
+				"parser": "go-template"
+			}
+		}
+	],
+	"arrowParens": "always",
+	"bracketSameLine": false,
+	"bracketSpacing": true,
+	"semi": true,
+	"singleQuote": false,
+	"jsxSingleQuote": false,
+	"quoteProps": "as-needed",
+	"trailingComma": "all",
+	"singleAttributePerLine": false,
+	"htmlWhitespaceSensitivity": "css",
+	"vueIndentScriptAndStyle": false,
+	"proseWrap": "preserve",
+	"insertPragma": false,
+	"requirePragma": false,
+	"useTabs": true,
+	"embeddedLanguageFormatting": "auto",
+	"printWidth": 120,
+	"tabWidth": 4
+}

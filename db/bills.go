@@ -156,8 +156,8 @@ func (r *BillRepository) Delete(id int64) error {
 	}
 
 	stmt, args, err := t.Compile(
-		`DELETE FROM bills WHERE id = {{ $. }}`,
-		id,
+		`DELETE FROM bills WHERE id = {{ $.id }}`,
+		map[string]int64{"id": id},
 	)
 	if err != nil {
 		return err

@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<title>Bill Minder</title>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<link rel="shortcut icon" type="image/jpg" href="#" />
+		<script src="/static/js/reload.js"></script>
+		<script src="/static/js/tailwind.js"></script>
+		<script src="/static/js/htmx.min.js"></script>
+		<script src="https://unpkg.com/hyperscript.org@0.9.12"></script>
+		<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+	</head>
+	<body class="p-6" hx-boost="true">
+		<div class="flex justify-between pb-6">
+			<h1 class="text-3xl font-semibold">Bills List</h1>
+			<button
+				class="py-2 px-4 text-white bg-sky-600 rounded"
+				hx-get="/bills/new"
+				hx-swap="beforebegin"
+				hx-target="#bill-list"
+			>
+				Add New
+			</button>
+		</div>
+		<div hx-get="/bills" hx-trigger="load"></div>
+	</body>
+</html>

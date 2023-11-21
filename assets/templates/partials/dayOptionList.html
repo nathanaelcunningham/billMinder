@@ -1,0 +1,10 @@
+{{ define "dayOptionList" }}
+	{{ $current := . }}
+	{{ range numList 1 31 }}
+		{{ if eq . $current }}
+			<option selected value="{{ . }}">{{ . }}</option>
+		{{ else }}
+			<option value="{{ . }}">{{ . }}</option>
+		{{ end }}
+	{{ end }}
+{{ end }}

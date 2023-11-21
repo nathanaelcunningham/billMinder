@@ -1,0 +1,56 @@
+<div class="grid grid-cols-1 gap-2" id="bill-form">
+	<input
+		class="p-2 rounded border border-zinc-200"
+		type="text"
+		name="name"
+		placeholder="Bill Name"
+		value="{{ if .Name }}{{ .Name }}{{ end }}"
+	/>
+	<select class="p-2 rounded border border-zinc-200" name="dueDateDay">
+		{{ if .DueDateDay }}
+			{{ template "dayOptionList" .DueDateDay }}
+		{{ else }}
+			{{ template "dayOptionList" }}
+		{{ end }}
+	</select>
+	<input
+		class="p-2 rounded border border-zinc-200"
+		type="number"
+		step=".01"
+		name="amount"
+		placeholder="Bill Amount"
+		value="{{ if .Amount }}{{ .Amount }}{{ end }}"
+	/>
+	<div class="flex flex-row gap-x-4 justify-between">
+		<div>
+			{{ if .ID }}
+				<button
+					class="py-2 px-4 text-white bg-red-600 rounded"
+					hx-delete="/bills/{{ .ID }}"
+					hx-target="#bill-list"
+					hx-swap="outerHTML"
+					_="on htmx:afterRequest remove #bill-form"
+				>
+					Delete
+				</button>
+			{{ end }}
+		</div>
+		<div>
+			<button class="py-2 px-4 text-white rounded bg-zinc-400" _="on click remove #bill-form">Cancel</button>
+			<button
+				class="py-2 px-4 text-white rounded bg-sky-600"
+				{{ if .ID }}
+					hx-put="/bills/{{ .ID }}"
+				{{ else }}
+					hx-post="/bills"
+				{{ end }}
+				hx-include="closest #bill-form"
+				hx-target="#bill-list"
+				hx-swap="outerHTML"
+				_="on htmx:afterRequest remove #bill-form"
+			>
+				Save
+			</button>
+		</div>
+	</div>
+</div>

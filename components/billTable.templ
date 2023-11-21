@@ -28,7 +28,7 @@ templ BillTable(bills []models.Bill, total float64) {
 					@GetBillRow(bill)
 				}
 			</tbody>
-			<tfoot>
+			<tfoot id="bill-table-foot">
 				<tr>
 					<td>Total Monthly Cost: </td>
 					<td>{ fmt.Sprint(math.Round(total*100)/100) }</td>

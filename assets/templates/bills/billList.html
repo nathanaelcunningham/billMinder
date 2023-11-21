@@ -1,0 +1,10 @@
+<div class="flex flex-col gap-y-4 pt-4" id="bill-list">
+	{{ range .Bills }}
+		<div class="grid grid-cols-4 gap-4 p-4 rounded shadow-md shadow-zinc-300" id="bill-row">
+			<div>{{ .Name }}</div>
+			<div>{{ .DueDateDay }}</div>
+			<div>{{ .Amount }}</div>
+			<button hx-get="/bills/{{ .ID }}/edit" hx-target="closest #bill-row" hx-swap="afterend">Edit</button>
+		</div>
+	{{ end }}
+</div>

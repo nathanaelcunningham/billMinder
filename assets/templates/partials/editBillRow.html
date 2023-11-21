@@ -1,0 +1,51 @@
+<tr class="block lg:table-row editing" hx-trigger="cancel" hx-get="/bills/{{ .ID }}">
+	<td class="block py-4 px-2 lg:table-cell">
+		<input
+			class="p-1 mt-1 w-full text-sm rounded-md border-gray-300 shadow-sm lg:w-auto lg:text-sm focus:ring-indigo-500"
+			id="name"
+			type="text"
+			name="name"
+			value="{{ .Name }}"
+			autocomplete="given-name"
+			placeholder="Name"
+		/>
+	</td>
+	<td class="block py-4 px-2 lg:table-cell">
+		<input
+			class="p-1 mt-1 w-full text-sm rounded-md border-gray-300 shadow-sm lg:w-auto lg:text-sm focus:ring-indigo-500"
+			id="amount"
+			type="number"
+			name="amount"
+			value="{{ .Amount }}"
+			placeholder="Amount"
+			autocomplete="amount"
+		/>
+	</td>
+	<td class="block py-4 px-2 lg:table-cell">
+		<select
+			class="block py-2 px-3 mt-1 w-full bg-white rounded-md border border-gray-300 shadow-sm sm:text-sm lg:w-auto focus:border-indigo-500 focus:ring-indigo-500 focus:outline-none"
+			id="day"
+			name="dueDateDay"
+			autocomplete="dueDateDay"
+		>
+			{{ template "dayOptionList" . }}
+		</select>
+	</td>
+	<td class="block py-4 px-2 lg:table-cell">
+		<button
+			class="py-2 px-4 mt-2 font-semibold text-white bg-red-500 rounded hover:bg-red-700"
+			type="button"
+			hx-get="/bills/{{ .ID }}"
+		>
+			Cancel
+		</button>
+		<button
+			class="py-2 px-4 font-semibold text-white bg-green-500 rounded hover:bg-green-700"
+			type="submit"
+			hx-target="bill-table"
+			hx-put="/bills/{{ .ID }}"
+		>
+			Save
+		</button>
+	</td>
+</tr>

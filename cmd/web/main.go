@@ -1,12 +1,13 @@
 package main
 
 import (
-	"fmt"
 	"log"
 	"sync"
 	"time"
 
 	"github.com/go-co-op/gocron"
+	"github.com/google/uuid"
+	"github.com/nathanaelcunningham/billReminder/assets"
 	"github.com/nathanaelcunningham/billReminder/config"
 	"github.com/nathanaelcunningham/billReminder/db"
 	"github.com/nathanaelcunningham/billReminder/mailer"
@@ -18,17 +19,18 @@ type application struct {
 	billRepo   *db.BillRepository
 	mailClient *mailer.Mailer
 	cfg        *config.Config
+	files      *assets.Embed
+	uuid       []byte
 }
 
 func main() {
 	if err := run(); err != nil {
-		log.Fatal(err)
+		log.Fatal(err.Error())
 	}
 }
 
 func run() error {
 	cfg := config.NewConfig(".env")
-	fmt.Println(cfg.DBPath)
 	database := db.New(cfg.DBPath)
 	database.RunMigrations()
 	defer database.Close()
@@ -37,12 +39,17 @@ func run() error {
 
 	mailClient := mailer.NewMailer(cfg.SendgridApiKey)
 
+	files := assets.New()
+	id := []byte(uuid.New().String())
+
 	app := &application{
 		wg:         sync.WaitGroup{},
 		db:         database,
 		billRepo:   billRepo,
 		mailClient: mailClient,
 		cfg:        cfg,
+		files:      files,
+		uuid:       id,
 	}
 
 	s := gocron.NewScheduler(time.UTC)
