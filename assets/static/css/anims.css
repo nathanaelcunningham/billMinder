@@ -1,0 +1,33 @@
+/* Define your slide in animation */
+@keyframes slide-in-right {
+	0% {
+		transform: translateX(100%);
+	}
+	100% {
+		transform: translateX(0);
+	}
+}
+
+/* Define your slide out animation */
+@keyframes slide-in-left {
+	0% {
+		transform: translateX(-100%);
+	}
+	100% {
+		transform: translateX(0);
+	}
+}
+
+/* Use these animations */
+.bill-list {
+	transition: transform 0.5s;
+	animation-duration: 0.5s;
+}
+
+.bill-list.slide-in-right {
+	animation-name: slide-in-right;
+}
+
+.bill-list.slide-in-left {
+	animation-name: slide-in-left;
+}

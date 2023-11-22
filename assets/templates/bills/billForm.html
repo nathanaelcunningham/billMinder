@@ -44,7 +44,10 @@
 		<div>
 			<button
 				class="py-2 px-4 rounded border hover:text-white border-zinc-400 hover:bg-zinc-400"
-				_="on click remove #bill-form"
+				hx-slide-out
+				hx-get="/bills"
+				hx-target="#bill-list"
+				hx-swap="outerHTML"
 			>
 				Cancel
 			</button>
@@ -55,10 +58,11 @@
 				{{ else }}
 					hx-post="/bills"
 				{{ end }}
+				hx-slide-out
 				hx-include="closest #bill-form"
 				hx-target="#bill-list"
 				hx-swap="outerHTML"
-				_="on htmx:afterRequest remove #bill-form"
+				_="on click wait 500ms then remove closest #bill-form"
 			>
 				Save
 			</button>

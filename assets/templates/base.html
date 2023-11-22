@@ -9,9 +9,11 @@
 		<script src="/static/js/tailwind.js"></script>
 		<script src="/static/js/htmx.min.js"></script>
 		<script src="https://unpkg.com/hyperscript.org@0.9.12"></script>
+		<script src="/static/js/hype.js"></script>
 		<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 		<link rel="manifest" href="/static/manifest.json" />
         <link href='https://unpkg.com/css.gg@2.0.0/icons/css/bolt.css' rel='stylesheet'>
+        <link href='/static/css/anims.css' rel='stylesheet'>
 	</head>
 	<body class="p-6 bg-gray-100" hx-boost="true">
 		<div class="flex justify-between pb-6">
@@ -19,7 +21,7 @@
 			<button
 				class="py-2 px-4 text-white rounded bg-sky-600"
 				hx-get="/bills/new"
-				hx-swap="beforebegin"
+				hx-swap="innerHtml"
 				hx-target="#bill-list"
 			>
 				Add New
