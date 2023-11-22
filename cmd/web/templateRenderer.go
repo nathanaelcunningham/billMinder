@@ -13,6 +13,7 @@ import (
 var funcMap = template.FuncMap{
 	"numList":   numList,
 	"dateStamp": getDate,
+	"moneyFmt":  moneyFmt,
 }
 
 type TemplateRenderer struct {

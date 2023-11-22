@@ -22,7 +22,7 @@ func (r *BillRepository) Get(id int64) (*models.Bill, error) {
 	}
 
 	stmt, args, err := t.Compile(
-		`SELECT id,name, due_date_day, amount FROM bills WHERE id = {{ . }}`,
+		`SELECT id,name, due_date_day, amount, is_autopay FROM bills WHERE id = {{ . }}`,
 		id,
 	)
 	if err != nil {
@@ -31,7 +31,7 @@ func (r *BillRepository) Get(id int64) (*models.Bill, error) {
 
 	row := r.DB.QueryRow(stmt, args...)
 	var b models.Bill
-	err = row.Scan(&b.ID, &b.Name, &b.DueDateDay, &b.Amount)
+	err = row.Scan(&b.ID, &b.Name, &b.DueDateDay, &b.Amount, &b.IsAutoPay)
 	if err != nil {
 		return nil, err
 	}
@@ -45,7 +45,7 @@ func (r *BillRepository) GetAll() ([]models.Bill, error) {
 	}
 
 	stmt, _, err := t.Compile(
-		`SELECT id,name, due_date_day, amount FROM bills ORDER BY due_date_day ASC, name ASC`,
+		`SELECT id,name, due_date_day, amount, is_autopay FROM bills ORDER BY due_date_day ASC, name ASC`,
 		nil,
 	)
 	if err != nil {
@@ -61,7 +61,7 @@ func (r *BillRepository) GetAll() ([]models.Bill, error) {
 	bills := []models.Bill{}
 	for rows.Next() {
 		var b models.Bill
-		err := rows.Scan(&b.ID, &b.Name, &b.DueDateDay, &b.Amount)
+		err := rows.Scan(&b.ID, &b.Name, &b.DueDateDay, &b.Amount, &b.IsAutoPay)
 		if err != nil {
 			return nil, err
 		}
@@ -82,7 +82,7 @@ func (r *BillRepository) GetUpcoming() ([]models.Bill, error) {
 	}
 
 	stmt, args, err := t.Compile(
-		`SELECT id,name, due_date_day, amount FROM bills WHERE due_date_day BETWEEN {{ .StartDay }} AND {{ .EndDay }} ORDER BY due_date_day ASC, name ASC`,
+		`SELECT id,name, due_date_day, amount, is_autopay FROM bills WHERE due_date_day BETWEEN {{ .StartDay }} AND {{ .EndDay }} ORDER BY due_date_day ASC, name ASC`,
 		dayFilter{today, today + 7},
 	)
 	if err != nil {
@@ -98,7 +98,7 @@ func (r *BillRepository) GetUpcoming() ([]models.Bill, error) {
 	bills := []models.Bill{}
 	for rows.Next() {
 		var b models.Bill
-		err := rows.Scan(&b.ID, &b.Name, &b.DueDateDay, &b.Amount)
+		err := rows.Scan(&b.ID, &b.Name, &b.DueDateDay, &b.Amount, &b.IsAutoPay)
 		if err != nil {
 			return nil, err
 		}
@@ -114,7 +114,7 @@ func (r *BillRepository) Create(bill *models.Bill) (int64, error) {
 	}
 
 	stmt, args, err := t.Compile(
-		`INSERT INTO bills (name, due_date_day, amount) VALUES ({{ $.Name }}, {{ $.DueDateDay }}, {{ $.Amount }})`,
+		`INSERT INTO bills (name, due_date_day, amount, is_autopay) VALUES ({{ $.Name }}, {{ $.DueDateDay }}, {{ $.Amount }}, {{if $.IsAutoPay }}1{{else}}0{{end}})}})`,
 		bill,
 	)
 	if err != nil {
@@ -135,7 +135,7 @@ func (r *BillRepository) Update(bill *models.Bill) error {
 	}
 
 	stmt, args, err := t.Compile(
-		`UPDATE bills SET name = {{ $.Name }}, due_date_day = {{ $.DueDateDay }}, amount = {{ $.Amount }} WHERE id = {{ $.ID }}`,
+		`UPDATE bills SET name = {{ $.Name }}, due_date_day = {{ $.DueDateDay }}, amount = {{ $.Amount }}, is_autopay = {{if $.IsAutoPay}}1{{else}}0{{end}} WHERE id = {{ $.ID }}`,
 		bill,
 	)
 	if err != nil {

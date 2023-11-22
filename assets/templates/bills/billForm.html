@@ -6,13 +6,19 @@
 		placeholder="Bill Name"
 		value="{{ if .Name }}{{ .Name }}{{ end }}"
 	/>
-	<select class="p-2 rounded border border-zinc-200" name="dueDateDay">
-		{{ if .DueDateDay }}
-			{{ template "dayOptionList" .DueDateDay }}
-		{{ else }}
-			{{ template "dayOptionList" }}
-		{{ end }}
-	</select>
+	<div class="grid grid-cols-6 gap-2">
+		<select class="col-span-4 p-2 rounded border border-zinc-200" name="dueDateDay">
+			{{ if .DueDateDay }}
+				{{ template "dayOptionList" .DueDateDay }}
+			{{ else }}
+				{{ template "dayOptionList" }}
+			{{ end }}
+		</select>
+		<div class="flex col-span-2 gap-2 justify-self-end items-center">
+			<label for="isAutoPay">Auto Pay</label>
+			<input class="p-4" type="checkbox" name="isAutoPay" {{ if .IsAutoPay }}checked{{ end }} />
+		</div>
+	</div>
 	<input
 		class="p-2 rounded border border-zinc-200"
 		type="number"
@@ -25,7 +31,7 @@
 		<div>
 			{{ if .ID }}
 				<button
-					class="py-2 px-4 text-white bg-red-600 rounded"
+					class="py-2 px-4 rounded border border-red-600 hover:text-white hover:bg-red-600"
 					hx-delete="/bills/{{ .ID }}"
 					hx-target="#bill-list"
 					hx-swap="outerHTML"
@@ -36,9 +42,14 @@
 			{{ end }}
 		</div>
 		<div>
-			<button class="py-2 px-4 text-white rounded bg-zinc-400" _="on click remove #bill-form">Cancel</button>
 			<button
-				class="py-2 px-4 text-white rounded bg-sky-600"
+				class="py-2 px-4 rounded border hover:text-white border-zinc-400 hover:bg-zinc-400"
+				_="on click remove #bill-form"
+			>
+				Cancel
+			</button>
+			<button
+				class="py-2 px-4 rounded border hover:text-white border-sky-600 text-slate-600 hover:bg-sky-600"
 				{{ if .ID }}
 					hx-put="/bills/{{ .ID }}"
 				{{ else }}

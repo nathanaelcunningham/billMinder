@@ -1,0 +1,22 @@
+{{ define "bill-card" }}
+	<div
+		class="relative bg-white rounded-sm shadow-md shadow-slate-200"
+		id="bill-row"
+		hx-get="/bills/{{ .ID }}/edit"
+		hx-target="closest #bill-row"
+		hx-swap="afterend"
+	>
+		<div class="flex justify-between py-6 px-4">
+			<div class="flex flex-col">
+				<p class="text-xl">{{ .Name }}</p>
+				<p class="text-sm text-slate-500">{{ dateStamp .DueDateDay }}</p>
+			</div>
+			<div class="flex flex-col justify-center">
+				<div>{{ moneyFmt .Amount }}</div>
+			</div>
+		</div>
+		{{ if .IsAutoPay }}
+			<i class="absolute top-0 right-0 mt-2 mr-4 gg-bolt text-sky-700"></i>
+		{{ end }}
+	</div>
+{{ end }}

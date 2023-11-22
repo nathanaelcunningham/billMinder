@@ -82,6 +82,7 @@ func (a *application) templateUpdateBill(c echo.Context) error {
 	billCreate.Amount = amt
 	day, _ := strconv.ParseInt(c.FormValue("dueDateDay"), 10, 64)
 	billCreate.DueDateDay = day
+	billCreate.IsAutoPay = c.FormValue("isAutoPay") == "on"
 
 	err := a.billRepo.Update(&billCreate)
 	if err != nil {
