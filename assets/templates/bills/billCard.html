@@ -2,7 +2,7 @@
 	<div class="slide-in" hx-get="/bills/{{ .ID }}/edit" hx-target="#bill-list" hx-swap="innerHTML">
 		<div class="relative bg-white rounded-sm shadow-md shadow-slate-200" id="bill-row">
 			<div class="flex justify-between py-6 px-4">
-				<div class="flex flex-col">
+				<div class="flex flex-col gap-y-1">
 					<p class="text-xl">{{ .Name }}</p>
 					<p class="text-sm text-slate-500">{{ dateStamp .DueDateDay }}</p>
 				</div>
@@ -10,9 +10,22 @@
 					<div>{{ moneyFmt .Amount }}</div>
 				</div>
 			</div>
-			{{ if .IsAutoPay }}
-				<i class="absolute top-0 right-0 mt-2 mr-4 gg-bolt text-sky-700"></i>
-			{{ end }}
+			<div class="absolute top-0 right-0 mt-2 mr-4">
+				<div class="flex gap-x-2 items-center">
+					{{ if eq .BillType "STATIC" }}
+						<div class="px-1 text-xs text-white lowercase rounded-lg bg-slate-400">
+							{{ .BillType }}
+						</div>
+					{{ else }}
+						<div class="px-1 text-xs text-white lowercase bg-blue-400 rounded-lg">
+							{{ .BillType }}
+						</div>
+					{{ end }}
+					{{ if .IsAutoPay }}
+						<i class="gg-bolt text-sky-700"></i>
+					{{ end }}
+				</div>
+			</div>
 		</div>
 	</div>
 {{ end }}

@@ -62,6 +62,7 @@ func (a *application) templateAddBill(c echo.Context) error {
 	billCreate.Amount = amt
 	day, _ := strconv.ParseInt(c.FormValue("dueDateDay"), 10, 64)
 	billCreate.DueDateDay = day
+	billCreate.BillType = models.BillType(c.FormValue("billType"))
 
 	_, err := a.billRepo.Create(&billCreate)
 	if err != nil {
@@ -74,17 +75,18 @@ func (a *application) templateUpdateBill(c echo.Context) error {
 	idStr := c.Param("id")
 	id, _ := strconv.ParseInt(idStr, 10, 64)
 
-	billCreate := models.Bill{
+	billUpdate := models.Bill{
 		ID: id,
 	}
-	billCreate.Name = c.FormValue("name")
+	billUpdate.Name = c.FormValue("name")
 	amt, _ := strconv.ParseFloat(c.FormValue("amount"), 64)
-	billCreate.Amount = amt
+	billUpdate.Amount = amt
 	day, _ := strconv.ParseInt(c.FormValue("dueDateDay"), 10, 64)
-	billCreate.DueDateDay = day
-	billCreate.IsAutoPay = c.FormValue("isAutoPay") == "on"
+	billUpdate.DueDateDay = day
+	billUpdate.IsAutoPay = c.FormValue("isAutoPay") == "on"
+	billUpdate.BillType = models.BillType(c.FormValue("billType"))
 
-	err := a.billRepo.Update(&billCreate)
+	err := a.billRepo.Update(&billUpdate)
 	if err != nil {
 		return c.String(500, err.Error())
 	}

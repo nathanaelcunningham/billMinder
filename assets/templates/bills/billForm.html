@@ -27,6 +27,10 @@
 		placeholder="Bill Amount"
 		value="{{ if .Amount }}{{ .Amount }}{{ end }}"
 	/>
+	<select class="p-2 rounded border border-zinc-200" name="billType">
+		<option {{ if eq .BillType "STATIC" }}selected{{ end }} value="STATIC">Static --- recurring bill</option>
+		<option {{ if eq .BillType "VARIABLE" }}selected{{ end }} value="VARIABLE">Variable --- projected expense</option>
+	</select>
 	<div class="flex flex-row gap-x-4 justify-between">
 		<div>
 			{{ if .ID }}
