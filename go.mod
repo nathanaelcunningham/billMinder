@@ -17,6 +17,8 @@ require (
 require (
 	github.com/dustin/go-humanize v1.0.1 // indirect
 	github.com/kballard/go-shellquote v0.0.0-20180428030007-95032a82bc51 // indirect
+	github.com/maragudk/gomponents v0.20.1 // indirect
+	github.com/maragudk/gomponents-htmx v0.4.0 // indirect
 	github.com/remyoudompheng/bigfft v0.0.0-20230129092748-24d4a6f8daec // indirect
 	github.com/robfig/cron/v3 v3.0.1 // indirect
 	github.com/sendgrid/rest v2.6.9+incompatible // indirect

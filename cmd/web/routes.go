@@ -26,5 +26,7 @@ func (a *application) routes() *echo.Echo {
 	e.DELETE("/bills/:id", a.templateDeleteBill)
 	e.GET("/ws/hotreload", a.websocketUpgrade)
 	e.POST("/dbDownload", a.dbDownload)
+
+	e.GET("/about", a.templateAbout)
 	return e
 }

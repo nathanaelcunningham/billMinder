@@ -3,19 +3,24 @@ package main
 import (
 	"fmt"
 	"math"
-	"net/http"
 	"strconv"
 
 	"github.com/labstack/echo/v4"
+	"github.com/nathanaelcunningham/billReminder/gomponents"
 	"github.com/nathanaelcunningham/billReminder/models"
 )
 
 func (a *application) templateHome(c echo.Context) error {
+	bills, err := a.billRepo.GetAll()
+	if err != nil {
+		fmt.Printf("%s\n", err.Error())
+		return err
+	}
+	return gomponents.Page("Home", "/", gomponents.BillList(bills)).Render(c.Response().Writer)
 
-	return c.Render(http.StatusOK, "base.html", nil)
 }
 func (a *application) templateBillForm(c echo.Context) error {
-	return c.Render(http.StatusOK, "bills/billForm.html", models.Bill{})
+	return gomponents.BillForm(models.Bill{}).Render(c.Response().Writer)
 }
 
 func (a *application) templateBillsList(c echo.Context) error {
@@ -36,7 +41,7 @@ func (a *application) templateBillsList(c echo.Context) error {
 		Total: math.Round(total*100) / 100,
 	}
 
-	return c.Render(http.StatusOK, "bills/billList.html", data)
+	return gomponents.BillList(data.Bills).Render(c.Response().Writer)
 }
 
 func (a *application) templateGetEditBill(c echo.Context) error {
@@ -47,7 +52,7 @@ func (a *application) templateGetEditBill(c echo.Context) error {
 	if err != nil {
 		return c.String(500, err.Error())
 	}
-	return c.Render(http.StatusOK, "bills/billForm.html", bill)
+	return gomponents.BillForm(*bill).Render(c.Response().Writer)
 }
 
 func (a *application) templateAddBill(c echo.Context) error {
@@ -101,4 +106,8 @@ func (a *application) templateDeleteBill(c echo.Context) error {
 		return c.String(500, err.Error())
 	}
 	return a.templateBillsList(c)
+}
+
+func (a *application) templateAbout(c echo.Context) error {
+	return gomponents.Page("About", "/about", gomponents.About()).Render(c.Response().Writer)
 }
