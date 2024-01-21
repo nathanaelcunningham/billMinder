@@ -6,3 +6,9 @@ type User struct {
 	Email    string `json:"email"`
 	Password string `json:"password"`
 }
+
+type UserSettings struct {
+	UserID             int64  `json:"user_id"`
+	ReminderOccurrence string `json:"reminder_occurrence"`
+	Timezone           string `json:"timezone"`
+}
